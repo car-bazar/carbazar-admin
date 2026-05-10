@@ -17,19 +17,6 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ car, view = 'vertical' }) => {
 	const { getCarDisplayName } = useCars()
 
-	const [images, setImages] = useState<string[]>([])
-	const [pdfs, setPdfs] = useState<string[]>([])
-
-	useEffect(() => {
-		const allFiles: string[] = car?.images || []
-		const imageFiles = allFiles.filter(url =>
-			/\.(jpg|jpeg|png|gif|webp)$/i.test(url),
-		)
-		setImages(imageFiles)
-		const pdfFiles = allFiles.filter(url => /\.pdf$/i.test(url))
-		setPdfs(pdfFiles)
-	}, [car?.images])
-
 	const useIsHorizontal = (view: string) => {
 		const getValue = () => view === 'horizontal' && window.innerWidth > 768
 

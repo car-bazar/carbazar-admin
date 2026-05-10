@@ -41,10 +41,19 @@ const CarBid = ({ car }: { car: ICarInfo }) => {
 	}
 
 	const handleRejectCar = async () => {
+		const isValid = await createForm.trigger()
+		if (!isValid) return
+
+		const formValues = createForm.getValues()
+
 		const data: ICarApprove = {
 			carId: car.id,
 			isApproved: false,
+			adminMessage: formValues.message,
+			photos: formValues.files.map((file: File) => URL.createObjectURL(file)),
 		}
+
+		await approveCar(data)
 	}
 
 	return (
@@ -74,7 +83,7 @@ const CarBid = ({ car }: { car: ICarInfo }) => {
 						<ConfirmationDialog
 							title='Reject Listing'
 							description={`Provide a reason and optionally attach supporting photos for the rejection of ${car.brand} ${car.model}`}
-							onConfirm={async () => {}}
+							onConfirm={handleRejectCar}
 							confirmLabel='Submit'
 							cancelLabel='Cancel'
 							trigger={

@@ -21,6 +21,7 @@ function Home() {
 		<div className='min-h-[80vh]'>
 			<Dashboard totalPending={totalPending ?? 0} />
 			<Cars cars={cars ?? []} />
+			// TODO: add purchased cars pre end step
 		</div>
 	)
 }

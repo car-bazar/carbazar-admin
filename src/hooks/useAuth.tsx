@@ -5,7 +5,7 @@ import {
 	useContext,
 	useEffect,
 	useMemo,
-	useState
+	useState,
 } from 'react'
 import { tokenStore } from './store/tokenStore'
 
@@ -14,7 +14,7 @@ export interface ILoginDto {
 	password: string
 }
 
-type User = {
+export type User = {
 	id: string
 	firstName: string
 	lastName: string
@@ -49,7 +49,9 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<User | null>(null)
-	const [isLoading, setIsLoading] = useState(true)
+	const [isLoading, setIsLoading] = useState(() => {
+		return !!tokenStore.getAccessToken()
+	})
 
 	const loadProfile = async () => {
 		const res = await userApi.getProfile()
@@ -63,14 +65,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			return
 		}
 
+		if (tokenStore.isExpired()) {
+			try {
+				const res = await authApi.refreshToken(accessToken)
+				tokenStore.setAccessToken(res.data)
+				await loadProfile()
+			} catch {
+				tokenStore.clear()
+				setUser(null)
+			}
+			return
+		}
+
 		try {
 			await loadProfile()
 		} catch (err: any) {
-			if (err?.response?.status === 401 && tokenStore.getAccessToken()) {
+			if (err?.response?.status === 401) {
 				try {
-					const refreshRes = await authApi.refreshToken(
-						tokenStore.getAccessToken()!
-					)
+					const refreshRes = await authApi.refreshToken(accessToken)
 					tokenStore.setAccessToken(refreshRes.data)
 					await loadProfile()
 				} catch {
@@ -129,9 +141,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 			isLoading,
 			login,
 			logout,
-			refetchUser
+			refetchUser,
 		}),
-		[user, isLoading, refetchUser]
+		[user, isLoading, refetchUser],
 	)
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

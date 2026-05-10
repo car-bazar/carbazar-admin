@@ -16,7 +16,7 @@ const CarDescriptions = ({ car, pdfs }: CarDescriptionsProps) => {
 						<p className='font-medium text-secondary/80 w-1/2 text-sm'>
 							{label}
 						</p>
-						<p className='font-medium text-secondary/80 w-1/2 tracking-wide capitalize text-sm'>
+						<p className='font-medium text-secondary/80 w-1/2 tracking-wide text-sm'>
 							{value}
 						</p>
 					</div>
@@ -71,26 +71,22 @@ const CarDescriptions = ({ car, pdfs }: CarDescriptionsProps) => {
 		</>
 	)
 
+	const tableUser = (label: string, value: string) => <></>
+
 	return (
 		<Tabs defaultValue='profile'>
-			<TabsList className='md:grid max-md:flex max-md:flex-col md:grid-cols-3 md:h-10 lg:h-12 h-32 shadow-custom-xl'>
-				<TabsTrigger
-					value='profile'
-					className='h-full lg:text-base text-sm max-md:w-full'
-				>
+			<TabsList className='md:grid max-md:flex max-md:flex-col md:grid-cols-4 md:h-10 lg:h-12 h-32 shadow-custom-xl'>
+				<TabsTrigger value='profile' className='h-full text-sm max-md:w-full'>
 					Profile
 				</TabsTrigger>
-				<TabsTrigger
-					value='equipment'
-					className='h-full lg:text-base text-sm max-md:w-full'
-				>
+				<TabsTrigger value='equipment' className='h-full text-sm max-md:w-full'>
 					Equipment
 				</TabsTrigger>
-				<TabsTrigger
-					value='condition'
-					className='h-full lg:text-base text-sm max-md:w-full'
-				>
+				<TabsTrigger value='condition' className='h-full text-sm max-md:w-full'>
 					Condition
+				</TabsTrigger>
+				<TabsTrigger value='seller' className='h-full text-sm max-md:w-full'>
+					Seller
 				</TabsTrigger>
 			</TabsList>
 			<TabsContent
@@ -127,11 +123,6 @@ const CarDescriptions = ({ car, pdfs }: CarDescriptionsProps) => {
 				<div className='flex flex-col text-background pt-6'>
 					<h3 className='lg:text-xl text-base font-semibold'>Specifications</h3>
 					<div className='lg:px-4 pb-4 pt-4 gap-4 flex flex-col'>
-						{/* <CarInfoAlert
-												text={
-													'Additional fees are charged when you pick up the vehicle more than 14 days after the PuA was sent to you.'
-												}
-											/> */}
 						{tableElement([
 							[
 								'First registration',
@@ -235,6 +226,63 @@ const CarDescriptions = ({ car, pdfs }: CarDescriptionsProps) => {
 							</div>
 						</div>
 					)}
+				</div>
+			</TabsContent>
+			<TabsContent
+				value='seller'
+				className='bg-foreground rounded-lg shadow-custom-xl px-6 py-5'
+			>
+				<div className='flex flex-col text-background'>
+					<h3 className='lg:text-xl text-base font-semibold'>Seller</h3>
+					<div className='lg:px-4 pb-4 pt-4 gap-4 flex flex-col'>
+						{tableElement([
+							[
+								'Name',
+								car?.sellerDetails?.firstName && car?.sellerDetails?.lastName
+									? `${car.sellerDetails.firstName} ${car.sellerDetails.lastName}`
+									: 'N/A',
+							],
+							['Email', car?.sellerDetails?.email || 'N/A'],
+							['Phone Number', car?.sellerDetails?.phoneNumber || 'N/A'],
+							['Address Line 1', car?.sellerDetails?.addressLine1 || 'N/A'],
+							['Address Line 2', car?.sellerDetails?.addressLine2 || 'N/A'],
+							['Postal Code', car?.sellerDetails?.postalCode || 'N/A'],
+							['City', car?.sellerDetails?.city || 'N/A'],
+							['Country', car?.sellerDetails?.country || 'N/A'],
+						])}
+					</div>
+				</div>
+				<div className='flex flex-col text-background pt-6'>
+					<h3 className='lg:text-xl text-base font-semibold'>Company</h3>
+					<div className='lg:px-4 pb-4 pt-4 gap-4 flex flex-col'>
+						{tableElement([
+							['Vat Number', car?.sellerDetails?.vatNumber || 'N/A'],
+							['Company Name', car?.sellerDetails?.companyName || 'N/A'],
+							[
+								'Business Type Name',
+								car?.sellerDetails?.businessTypeName || 'N/A',
+							],
+						])}
+					</div>
+				</div>
+				<div className='flex flex-col text-background pt-6'>
+					<h3 className='lg:text-xl text-base font-semibold'>Delivery</h3>
+					<div className='lg:px-4 pb-4 pt-4 gap-4 flex flex-col'>
+						{tableElement([
+							[
+								'Delivery Address 1',
+								car?.sellerDetails?.deliveryAddress1 || 'N/A',
+							],
+							[
+								'Delivery Address 2',
+								car?.sellerDetails?.deliveryAddress2 || 'N/A',
+							],
+							[
+								'Delivery Address 3',
+								car?.sellerDetails?.deliveryAddress3 || 'N/A',
+							],
+						])}
+					</div>
 				</div>
 			</TabsContent>
 		</Tabs>

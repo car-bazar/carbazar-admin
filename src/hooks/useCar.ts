@@ -1,6 +1,7 @@
 import { carApi } from '@/api/api'
 import { toast } from './use-toast'
 import { useApiResource } from './useApiResource'
+import { User } from './useAuth'
 
 export interface DamageElementCar {
 	name: string
@@ -44,11 +45,14 @@ export interface ICarInfo {
 	damageComments: string
 	images: string[]
 	previewImage: string
+	sellerDetails: Omit<User, 'id'>
 }
 
 export interface ICarApprove {
 	carId: string
 	isApproved: boolean
+	adminMessage?: string
+	photos?: string[]
 }
 
 export function useCars() {
