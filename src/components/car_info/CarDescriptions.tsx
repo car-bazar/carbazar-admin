@@ -71,8 +71,6 @@ const CarDescriptions = ({ car, pdfs }: CarDescriptionsProps) => {
 		</>
 	)
 
-	const tableUser = (label: string, value: string) => <></>
-
 	return (
 		<Tabs defaultValue='profile'>
 			<TabsList className='md:grid max-md:flex max-md:flex-col md:grid-cols-4 md:h-10 lg:h-12 h-32 shadow-custom-xl'>

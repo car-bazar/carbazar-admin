@@ -4,7 +4,7 @@ interface IOffersProps {
 	offers: IOfferInfo[]
 }
 
-const Offers: React.FC<IOffersProps> = ({ offers }) => {
+const Offers: React.FC<IOffersProps> = ({}) => {
 	return (
 		<div className='main-sizing min-h-[40vh]'>
 			<div className='mt-10 flex flex-col max-md:items-center'>

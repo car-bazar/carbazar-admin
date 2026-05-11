@@ -5,7 +5,7 @@ import Cars from './my-account/cars'
 import Dashboard from './my-account/dashboard'
 
 function Home() {
-	const { cars, loading, error } = useCars()
+	const { cars, loading } = useCars()
 	const { offers, loading: offersLoading } = useOffers()
 	const totalPending = cars?.length
 	const totalOffers = offers?.length

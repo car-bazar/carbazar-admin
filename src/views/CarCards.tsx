@@ -1,31 +1,25 @@
-import Card from '@/components/bid/card'
 import {
 	Carousel,
 	CarouselContent,
-	CarouselItem,
 	CarouselNext,
 	CarouselPrevious,
 } from '@/components/ui/carousel'
-import { IGetCar } from '@/hooks/useCar'
-import PaginationBox from '@/utils/PaginationBox'
 
 interface ItemsContainerProps {
-	cars: IGetCar
 	currentPage?: number
 	setCurrentPage?: React.Dispatch<React.SetStateAction<number>>
 	useCarousel?: boolean
 }
 
 const ItemsContainer: React.FC<ItemsContainerProps> = ({
-	cars,
-	currentPage = 1,
-	setCurrentPage,
+	// currentPage = 1,
+	// setCurrentPage,
 	useCarousel = false,
 }) => {
-	const totalPages = cars.totalPages
-	const handlePageChange = (page: number) => {
-		setCurrentPage?.(page)
-	}
+	// const totalPages = cars.totalPages
+	// const handlePageChange = (page: number) => {
+	// 	setCurrentPage?.(page)
+	// }
 
 	return (
 		<div className='mt-4'>
@@ -33,13 +27,13 @@ const ItemsContainer: React.FC<ItemsContainerProps> = ({
 				{useCarousel ? (
 					<Carousel opts={{ align: 'start' }} className='w-full'>
 						<CarouselContent>
-							{cars.cars.slice(0, 10).map(item => (
+							{/* {cars.cars.slice(0, 10).map(item => (
 								<CarouselItem key={item.id} className='basis-[min(350px,100%)]'>
 									<div className='py-10'>
 										<Card car={item}></Card>
 									</div>
 								</CarouselItem>
-							))}
+							))} */}
 						</CarouselContent>
 						<CarouselPrevious className='lg:-left-12 lg:top-1/2 lg:-translate-y-1/2 left-14 max-lg:-bottom-14' />
 						<CarouselNext className='lg:-right-12 lg:top-1/2 lg:-translate-y-1/2 right-14 max-lg:-bottom-14' />
@@ -47,19 +41,19 @@ const ItemsContainer: React.FC<ItemsContainerProps> = ({
 				) : (
 					<>
 						<div className='grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-3 w-full'>
-							{cars.cars.map(car => (
+							{/* {cars.cars.map(car => (
 								<div key={car.id} className='p-1'>
 									<Card car={car} />
 								</div>
-							))}
+							))} */}
 						</div>
-						{totalPages > 1 && (
+						{/* {totalPages > 1 && (
 							<PaginationBox
 								totalPages={totalPages}
 								currentPage={currentPage}
 								handlePageChange={handlePageChange}
 							/>
-						)}
+						)} */}
 					</>
 				)}
 			</div>
