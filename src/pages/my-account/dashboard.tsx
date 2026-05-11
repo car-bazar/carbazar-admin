@@ -18,11 +18,16 @@ const getFilteredDashboardItems = (
 
 interface IDashboardProps {
 	totalPending: number
+	totalOffers: number
 }
 
-const Dashboard: React.FC<IDashboardProps> = ({ totalPending }) => {
+const Dashboard: React.FC<IDashboardProps> = ({
+	totalPending,
+	totalOffers,
+}) => {
 	const filteredToDoItems = getFilteredDashboardItems(DASHBOARD_TO_DO, {
 		pending_cars: totalPending,
+		pending_offers: totalOffers,
 	})
 
 	const defaulBlock = () => (

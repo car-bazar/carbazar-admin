@@ -1,6 +1,7 @@
 import { tokenStore } from '@/hooks/store/tokenStore'
 import { ILoginDto } from '@/hooks/useAuth'
 import { ICarApprove, ICarInfo } from '@/hooks/useCar'
+import { IOfferApprove, IOfferInfo } from '@/hooks/useOffers'
 import axios, {
 	AxiosError,
 	AxiosInstance,
@@ -125,6 +126,9 @@ export const userApi = {
 
 export const carApi = {
 	getCars: () => authHttp.get<ICarInfo[]>(`/admin/cars-to-approve`),
+	getOffers: () => authHttp.get<IOfferInfo[]>(`/admin/offers-to-approve`),
 	approveCar: (data: ICarApprove) =>
 		authHttp.post<string>(`/admin/approve-car`, data),
+	approveOffer: (data: IOfferApprove) =>
+		authHttp.post<string>(`/admin/approve-offer`, data),
 }
